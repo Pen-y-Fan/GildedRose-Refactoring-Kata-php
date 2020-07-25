@@ -6,6 +6,7 @@ parameters:
         - 'symplify'
         - 'common'
         - 'clean-code'
+        - 'phpunit'
 
     line_ending: "\n"
 
