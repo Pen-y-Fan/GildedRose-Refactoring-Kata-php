@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace GildedRose;
+namespace GildedRose\products;
 
-class GildedRoseFactory
+use GildedRose\Item;
+
+class ProductFactory
 {
-    public function create(Item $item): AbstractGildedRose
+    public function create(Item $item): AbstractProduct
     {
         switch ($item->name) {
             case 'Sulfuras, Hand of Ragnaros':

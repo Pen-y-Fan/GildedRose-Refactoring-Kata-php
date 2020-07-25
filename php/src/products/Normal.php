@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace GildedRose;
+namespace GildedRose\products;
 
-class Conjured extends AbstractGildedRose
+use GildedRose\Item;
+
+class Normal extends AbstractProduct
 {
     public function __construct(Item $item)
     {
@@ -15,9 +17,7 @@ class Conjured extends AbstractGildedRose
     {
         $this->reduceSellIn();
         $this->reduceQuality();
-        $this->reduceQuality();
         if ($this->hasSellInPassed()) {
-            $this->reduceQuality();
             $this->reduceQuality();
         }
     }

@@ -2,10 +2,15 @@
 
 declare(strict_types=1);
 
-namespace GildedRose;
+namespace GildedRose\products;
 
-abstract class AbstractGildedRose
+use GildedRose\Item;
+
+abstract class AbstractProduct
 {
+    private const MAX_QUALITY = 50;
+    private const MIN_QUALITY = 0;
+    private const MIN_SELL_IN = 0;
     /**
      * @var Item
      */
@@ -13,14 +18,14 @@ abstract class AbstractGildedRose
 
     public function reduceQuality(): void
     {
-        if ($this->item->quality > 0) {
+        if ($this->item->quality > self::MIN_QUALITY) {
             --$this->item->quality;
         }
     }
 
     public function increaseQuality(): void
     {
-        if ($this->item->quality < 50) {
+        if ($this->item->quality < self::MAX_QUALITY) {
             ++$this->item->quality;
         }
     }
@@ -32,12 +37,12 @@ abstract class AbstractGildedRose
 
     public function zeroQuality(): void
     {
-        $this->item->quality = 0;
+        $this->item->quality = self::MIN_QUALITY;
     }
 
     public function hasSellInPassed(): bool
     {
-        return $this->item->sell_in < 0;
+        return $this->item->sell_in < self::MIN_SELL_IN;
     }
 
     public function update(): void

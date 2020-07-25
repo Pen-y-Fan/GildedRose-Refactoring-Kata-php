@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace GildedRose;
 
+use GildedRose\products\AbstractProduct;
+use GildedRose\products\ProductFactory;
 use SplObjectStorage;
 
 final class GildedRose
@@ -16,7 +18,7 @@ final class GildedRose
     public function __construct(array $items)
     {
         $this->items = new SplObjectStorage();
-        $factory = new GildedRoseFactory();
+        $factory = new ProductFactory();
         foreach ($items as $item) {
             $this->items->attach($factory->create($item));
         }
@@ -24,7 +26,7 @@ final class GildedRose
 
     public function updateQuality(): void
     {
-        /** @var AbstractGildedRose $item */
+        /** @var AbstractProduct $item */
         foreach ($this->items as $item) {
             $item->update();
         }

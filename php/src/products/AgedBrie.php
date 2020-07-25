@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace GildedRose;
+namespace GildedRose\products;
 
-class AgedBrie extends AbstractGildedRose
+use GildedRose\Item;
+
+class AgedBrie extends AbstractProduct
 {
     public function __construct(Item $item)
     {

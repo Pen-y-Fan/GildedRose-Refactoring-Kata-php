@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace GildedRose;
+namespace GildedRose\products;
 
-class BackstagePasses extends AbstractGildedRose
+use GildedRose\Item;
+
+class BackstagePasses extends AbstractProduct
 {
     public function __construct(Item $item)
     {
