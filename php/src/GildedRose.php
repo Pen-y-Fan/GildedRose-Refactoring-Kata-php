@@ -19,51 +19,66 @@ final class GildedRose
     public function updateQuality(): void
     {
         foreach ($this->items as $item) {
-            if ($item->name != 'Aged Brie' and $item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                if ($item->quality > 0) {
-                    if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                        $item->quality = $item->quality - 1;
+            switch ($item->name) {
+                case 'Sulfuras, Hand of Ragnaros':
+                    continue 2;
+                case 'Aged Brie':
+                    $this->reduceSellIn($item);
+                    $this->increaseQuality($item);
+                    if ($this->hasSellInPassed($item)) {
+                        $this->increaseQuality($item);
                     }
-                }
-            } else {
-                if ($item->quality < 50) {
-                    $item->quality = $item->quality + 1;
-                    if ($item->name == 'Backstage passes to a TAFKAL80ETC concert') {
-                        if ($item->sell_in < 11) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
-                        }
-                        if ($item->sell_in < 6) {
-                            if ($item->quality < 50) {
-                                $item->quality = $item->quality + 1;
-                            }
-                        }
+                    break;
+                case 'Backstage passes to a TAFKAL80ETC concert':
+                    $this->reduceSellIn($item);
+                    if ($this->hasSellInPassed($item)) {
+                        $this->zeroQuality($item);
+                        continue 2;
                     }
-                }
-            }
-
-            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                $item->sell_in = $item->sell_in - 1;
-            }
-
-            if ($item->sell_in < 0) {
-                if ($item->name != 'Aged Brie') {
-                    if ($item->name != 'Backstage passes to a TAFKAL80ETC concert') {
-                        if ($item->quality > 0) {
-                            if ($item->name != 'Sulfuras, Hand of Ragnaros') {
-                                $item->quality = $item->quality - 1;
-                            }
-                        }
-                    } else {
-                        $item->quality = $item->quality - $item->quality;
+                    $this->increaseQuality($item);
+                    if ($item->sell_in < 10) {
+                        $this->increaseQuality($item);
                     }
-                } else {
-                    if ($item->quality < 50) {
-                        $item->quality = $item->quality + 1;
+                    if ($item->sell_in < 5) {
+                        $this->increaseQuality($item);
                     }
-                }
+                    break;
+                default:
+                    $this->reduceSellIn($item);
+                    $this->reduceQuality($item);
+                    if ($this->hasSellInPassed($item)) {
+                        $this->reduceQuality($item);
+                    }
             }
         }
+    }
+
+    private function reduceQuality(Item $item): void
+    {
+        if ($item->quality > 0) {
+            --$item->quality;
+        }
+    }
+
+    private function increaseQuality(Item $item): void
+    {
+        if ($item->quality < 50) {
+            ++$item->quality;
+        }
+    }
+
+    private function reduceSellIn(Item $item): void
+    {
+        --$item->sell_in;
+    }
+
+    private function zeroQuality(Item $item): void
+    {
+        $item->quality = 0;
+    }
+
+    private function hasSellInPassed(Item $item): bool
+    {
+        return $item->sell_in < 0;
     }
 }
