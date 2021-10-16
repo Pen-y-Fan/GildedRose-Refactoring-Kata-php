@@ -11,6 +11,8 @@ class ApprovalTest extends TestCase
 {
     public function testTestFixture(): void
     {
+        $this->markTestSkipped('Not compatible with Pest');
+
         $argv[0] = 'texttest_fixture.php';
         $argv[1] = 31;
 

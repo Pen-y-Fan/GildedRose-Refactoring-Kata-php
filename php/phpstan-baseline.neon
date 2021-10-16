@@ -1,0 +1,18 @@
+parameters:
+# Ignore Pest PHP errors
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method Pest\\\\Expectation\\|Pest\\\\Support\\\\Extendable\\:\\:toBeTrue\\(\\)\\.$#"
+			count: 1
+			path: tests/ExampleTest.php
+
+		-
+			message: "#^Call to an undefined method Pest\\\\Expectation\\|Pest\\\\Support\\\\Extendable\\:\\:toBe\\(\\)\\.$#"
+			count: 18
+			path: tests/GildedRoseTest.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: tests/Pest.php
+
